@@ -3,6 +3,7 @@ package com.mateo.stayora_backend.api.controller;
 import com.mateo.stayora_backend.security.AuthRequest;
 import com.mateo.stayora_backend.security.AuthResponse;
 import com.mateo.stayora_backend.security.AuthService;
+import com.mateo.stayora_backend.security.SignupRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,13 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("token")
+    @PostMapping("/log-in")
     public AuthResponse login(@RequestBody AuthRequest authRequest) {
         return authService.authenticate(authRequest);
+    }
+
+    @PostMapping("/sign-up")
+    public AuthResponse signUp(@RequestBody SignupRequest request) {
+        return authService.signup(request);
     }
 }
