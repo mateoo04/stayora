@@ -1,8 +1,20 @@
 package com.mateo.stayora_backend.security;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public record SignupRequest(
+        @NotBlank(message = "First name is required")
         String firstName,
+
+        @NotBlank(message = "Last name is required")
         String lastName,
-        String email,
+
+        @Email(message = "Invalid email format")
+        @NotBlank(message = "Email is required")
+        String username,
+
+        @Size(min = 8, message = "Password must be at least 8 characters")
         String password) {
 }

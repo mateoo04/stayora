@@ -36,13 +36,29 @@ public class Listing {
     @Enumerated(EnumType.STRING)
     private ListingStatus status = ListingStatus.DRAFT;
 
+    @Column(nullable = false)
+    private String city;
+
+    private String addressLine;
+
+    @Column(nullable = false)
+    private double latitude;
+
+    @Column(nullable = false)
+    private double longitude;
+
     protected Listing(){}
 
-    public Listing(User host, String title, String description, BigDecimal nightPrice) {
+    public Listing(User host, String title, String description, BigDecimal nightPrice, ListingStatus status, String city, String addressLine, double latitude, double longitude) {
         this.host = host;
         this.title = title;
         this.description = description;
         this.nightPrice = nightPrice;
+        this.status = status;
+        this.city = city;
+        this.addressLine = addressLine;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public User getHost() {
@@ -96,5 +112,35 @@ public class Listing {
         this.status = ListingStatus.PAUSED;
     }
 
+    public String getCity() {
+        return city;
+    }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddressLine() {
+        return addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }

@@ -1,6 +1,8 @@
 package com.mateo.stayora_backend.security;
 
 import com.mateo.stayora_backend.api.enums.UserRole;
+import com.mateo.stayora_backend.api.errors.EmailAlreadyExistsException;
+import com.mateo.stayora_backend.api.errors.WeakPasswordException;
 import com.mateo.stayora_backend.api.model.User;
 import com.mateo.stayora_backend.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,24 +33,29 @@ public class AuthService {
         String jwtToken = jwtTokenService.generateToken(authentication);
         Long expiresAt = jwtTokenService.extractExpirationTime(jwtToken);
 
-        return new AuthResponse(jwtToken, authentication.getName(), expiresAt);
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        User user = authUser.getUser();
+
+        return new AuthResponse(jwtToken, expiresAt,user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
     }
 
     public AuthResponse signup(SignupRequest request) {
-        if(userRepository.existsByEmail(request.email())) throw new IllegalArgumentException("Email already in use");
+        if(userRepository.existsByEmail(request.username())) throw new EmailAlreadyExistsException();
 
-        User user = new User(request.firstName(), request.lastName(), request.email(),
+        if(request.password().length() < 8) throw new WeakPasswordException();
+
+        User user = new User(request.firstName(), request.lastName(), request.username(),
                 passwordEncoder.encode(request.password()), UserRole.GUEST);
 
         userRepository.save(user);
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())
+                new UsernamePasswordAuthenticationToken(request.username(), request.password())
         );
 
         String jwtToken = jwtTokenService.generateToken(authentication);
         Long expiresAt = jwtTokenService.extractExpirationTime(jwtToken);
 
-        return new AuthResponse(jwtToken, authentication.getName(), expiresAt);
+        return new AuthResponse(jwtToken, expiresAt, user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
     }
 }

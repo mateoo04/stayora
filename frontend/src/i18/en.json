@@ -1,0 +1,29 @@
+{
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "dontHaveAccount": "Don't have an account? ",
+      "signUpLink": "Sign up here"
+    },
+    "signup": {
+      "title": "Sign up",
+      "firstName": "First Name",
+        "lastName": "Last Name",
+        "confirmPassword": "Confirm Password",
+      "submit": "Create account",
+      "haveAccount": "Already have an account? ",
+      "loginLink": "Log in here"
+    },
+    "errors": {
+        "emailExists": "An account with this email already exists.",
+        "invalidEmail": "The email address is not valid.",
+        "passwordsDontMatch": "Passwords do not match.",
+        "weakPassword": "Password should be at least 8 characters long and consist of letters and numbers.",
+        "validationError": "Please ensure all fields are filled out correctly.",
+        "invalidLoginData": "Invalid email or password."
+    }
+  }
+}

@@ -4,6 +4,7 @@ import com.mateo.stayora_backend.security.AuthRequest;
 import com.mateo.stayora_backend.security.AuthResponse;
 import com.mateo.stayora_backend.security.AuthService;
 import com.mateo.stayora_backend.security.SignupRequest;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public AuthResponse signUp(@RequestBody SignupRequest request) {
+    public AuthResponse signUp(@Valid @RequestBody SignupRequest request) {
         return authService.signup(request);
     }
 }

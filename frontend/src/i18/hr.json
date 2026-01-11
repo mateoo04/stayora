@@ -1,0 +1,14 @@
+{
+  "auth": {
+    "login": {
+      "title": "Prijava",
+      "email": "Email",
+      "password": "Lozinka",
+      "submit": "Prijavi se"
+    },
+    "signup": {
+      "title": "Registracija",
+      "submit": "Kreiraj račun"
+    }
+  }
+}

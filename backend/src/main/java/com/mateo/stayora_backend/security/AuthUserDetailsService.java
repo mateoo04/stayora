@@ -1,6 +1,6 @@
 package com.mateo.stayora_backend.security;
 
-import com.mateo.stayora_backend.repository.UserRepository;
+import com.mateo.stayora_backend.api.errors.InvalidCredentialsException;
 import com.mateo.stayora_backend.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +20,7 @@ public class AuthUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userService.findByEmail(email)
                 .map(AuthUser::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
+                .orElseThrow(InvalidCredentialsException::new);
 
     }
 }
