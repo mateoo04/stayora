@@ -13,7 +13,7 @@ public record SignupRequest(
 
         @Email(message = "Invalid email format")
         @NotBlank(message = "Email is required")
-        String username,
+        String email,
 
         @Size(min = 8, message = "Password must be at least 8 characters")
         String password) {

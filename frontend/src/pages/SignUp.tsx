@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp(){
     const {signup, isAuthenticated, authErrorCode} = useAuth();
@@ -64,8 +64,8 @@ export default function SignUp(){
     }
 
     return (
-        <div className="login__wrapper">
-        <h2>{t('auth.signup.title')}</h2>
+        <div className="sign-up__wrapper flex flex-col gap-2 items-center max-w-7xl mx-auto px-4 py-6">
+        <h2 className="text-3xl font-bold">{t('auth.signup.title')}</h2>
 
         {validationError && (
             <p className="error-message">{validationError}</p>
@@ -79,59 +79,54 @@ export default function SignUp(){
         {authErrorCode === 'VALIDATION_ERROR' && (
             <p className="error-message">{t('auth.errors.validationError')}</p>
         )}
-        <form onSubmit={handleSubmit} className="login__form">
-            <div className="form__group">
-                <label htmlFor="email">{t('auth.signup.firstName')}</label>
+        <form onSubmit={handleSubmit} className="sign-up__form flex flex-col gap-2 w-full">
                 <input
                     type="text"
                     id="firstName"
+                    className="input"
                     value={firstName}
                     onChange={e => setFirstName(e.target.value)}
                     required
+                    placeholder={t('auth.signup.firstName')}
                     />
-        </div>
-            <div className="form__group">
-                <label htmlFor="email">{t('auth.signup.lastName')}</label>
                 <input
                     type="text"
                     id="lastName"
+                    className="input"
                     value={lastName}
                     onChange={e => setLastName(e.target.value)}
                     required
+                    placeholder={t('auth.signup.lastName')}
                     />
-        </div>
-            <div className="form__group">
-                <label htmlFor="email">{t('auth.login.email')}</label>
                 <input
                     type="email"
                     id="email"
+                    className="input"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     required
+                    placeholder={t('auth.login.email')}
                     />
-        </div>
-            <div className="form__group">
-                <label htmlFor="password">{t('auth.login.password')}</label>
                 <input
                     type="password"
                     id="password"
+                    className="input"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
+                    placeholder={t('auth.login.password')}
                     />
-        </div>
-            <div className="form__group">
-                <label htmlFor="password">{t('auth.signup.confirmPassword')}</label>
                 <input
+                    className="input"
                     type="password"
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     required
+                    placeholder={t('auth.signup.confirmPassword')}
                     />
-        </div>
 </form>
-<button type="submit" onClick={handleSubmit}>{t('auth.signup.submit')}</button>
-<p>{t('auth.signup.haveAccount')}<a href="/log-in">{t('auth.signup.loginLink')}</a></p>
+<button type="submit" className="btn btn-primary btn--big mt-2" onClick={handleSubmit}>{t('auth.signup.submit')}</button>
+<p className="mt-2">{t('auth.signup.haveAccount')}<Link to="/log-in" className="link-secondary link-hover">{t('auth.signup.loginLink')}</Link></p>
         </div>
     )
 }

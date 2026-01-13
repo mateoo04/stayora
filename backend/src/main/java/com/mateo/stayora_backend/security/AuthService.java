@@ -1,5 +1,6 @@
 package com.mateo.stayora_backend.security;
 
+import com.mateo.stayora_backend.api.dto.UserDto;
 import com.mateo.stayora_backend.api.enums.UserRole;
 import com.mateo.stayora_backend.api.errors.EmailAlreadyExistsException;
 import com.mateo.stayora_backend.api.errors.WeakPasswordException;
@@ -10,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -34,28 +37,42 @@ public class AuthService {
         Long expiresAt = jwtTokenService.extractExpirationTime(jwtToken);
 
         AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        assert authUser != null;
         User user = authUser.getUser();
 
-        return new AuthResponse(jwtToken, expiresAt,user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
+        return new AuthResponse(jwtToken, expiresAt, user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
     }
 
     public AuthResponse signup(SignupRequest request) {
-        if(userRepository.existsByEmail(request.username())) throw new EmailAlreadyExistsException();
+        if(userRepository.existsByEmail(request.email())) throw new EmailAlreadyExistsException();
 
         if(request.password().length() < 8) throw new WeakPasswordException();
 
-        User user = new User(request.firstName(), request.lastName(), request.username(),
+        User user = new User(request.firstName(), request.lastName(), request.email(),
                 passwordEncoder.encode(request.password()), UserRole.GUEST);
 
         userRepository.save(user);
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.username(), request.password())
+                new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );
 
         String jwtToken = jwtTokenService.generateToken(authentication);
         Long expiresAt = jwtTokenService.extractExpirationTime(jwtToken);
 
-        return new AuthResponse(jwtToken, expiresAt, user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
+        return new AuthResponse(jwtToken, expiresAt, user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getRole());
+    }
+
+    public UserDto getCurrentUser(Authentication authentication) {
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        return new UserDto(
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole()
+        );
     }
 }

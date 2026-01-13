@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { AuthState, LoginRequest, SignupRequest } from "../types/auth";
 import { api } from "../api/client";
-import { apiLogin, apiSignup } from "../api/auth";
+import { apiGetCurrentUser, apiLogin, apiSignup } from "../api/auth";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
     user: AuthState | null;
@@ -11,6 +12,9 @@ interface AuthContextType {
     login: (data: LoginRequest) => Promise<void>;
     signup: (data: SignupRequest) => Promise<void>;
     logOut: () => void;
+    isAdmin: () => boolean;
+    isHost: () => boolean;
+    isGuest: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -20,10 +24,21 @@ const [user, setUser] = useState<AuthState | null>(null);
 const [authErrorCode, setAuthErrorCode] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('authUser');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        async function loadUserFromStorage() {
+            const token = localStorage.getItem("token");
+            if (token) {
+                try {
+                    const res = await apiGetCurrentUser();
+                    if(res) setUser(res.data);
+                } catch (error) {
+                    console.error("Failed to load user from storage:", error);
+                    //localStorage.removeItem("token");
+                    setUser(null);
+                }
+            }
         }
+
+        loadUserFromStorage();
     }, []);
 
   async function signup(data: SignupRequest) {
@@ -35,7 +50,6 @@ const [authErrorCode, setAuthErrorCode] = useState<string | undefined>(undefined
     catch (error) {
         if(axios.isAxiosError(error)){
             setAuthErrorCode(error.response?.data?.code);
-            console.log("error code:", error.response?.data?.code);
         }
     }
     const auth = res?.data;
@@ -51,23 +65,34 @@ const [authErrorCode, setAuthErrorCode] = useState<string | undefined>(undefined
         catch (error) {
             if(axios.isAxiosError(error)){
             setAuthErrorCode(error.response?.data?.code);
-            console.log("error code:", error.response?.data?.code);
         }
         }
         const auth = res?.data;
         if(auth) {setUser(auth);
-        localStorage.setItem('authUser', JSON.stringify(auth));
+        localStorage.setItem('token', auth.token);
 
         api.defaults.headers.common.Authorization = auth.token;}
     };
 
   function logOut() {
-    localStorage.removeItem("auth");
+    localStorage.removeItem("token");
     setUser(null);
   }
 
+  function isAdmin() {
+    return user?.role === "ADMIN";
+  }
+
+  function isHost() {
+    return user?.role === "HOST";
+  }
+
+  function isGuest() {
+    return user?.role === "GUEST";
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, authErrorCode, login, signup, logOut }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, authErrorCode, login, signup, logOut, isAdmin, isHost, isGuest }}>
       {children}
     </AuthContext.Provider>
   );

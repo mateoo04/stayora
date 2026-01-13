@@ -8,3 +8,7 @@ export function apiLogin(data: LoginRequest){
 export function apiSignup(data: SignupRequest){
     return api.post<AuthState>('/auth/sign-up', data);
 }
+
+export function apiGetCurrentUser(){
+    return api.get<AuthState>('/auth/me');
+}

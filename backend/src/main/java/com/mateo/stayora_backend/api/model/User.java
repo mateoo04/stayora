@@ -13,6 +13,12 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "user_seq",
+            sequenceName = "user_id_seq",
+            initialValue = 10256,
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(nullable = false)

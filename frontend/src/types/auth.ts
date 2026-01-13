@@ -3,6 +3,7 @@ export type UserRole = "ADMIN" | "HOST" | "GUEST";
 export interface AuthState {
   token: string;
   expiresAt: number;
+  id: number;
   username: string;
   firstName: string;
   lastName: string;

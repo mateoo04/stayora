@@ -1,14 +1,11 @@
 package com.mateo.stayora_backend.api.controller;
 
-import com.mateo.stayora_backend.security.AuthRequest;
-import com.mateo.stayora_backend.security.AuthResponse;
-import com.mateo.stayora_backend.security.AuthService;
-import com.mateo.stayora_backend.security.SignupRequest;
+import com.mateo.stayora_backend.api.dto.UserDto;
+import com.mateo.stayora_backend.api.model.User;
+import com.mateo.stayora_backend.security.*;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,5 +25,10 @@ public class AuthController {
     @PostMapping("/sign-up")
     public AuthResponse signUp(@Valid @RequestBody SignupRequest request) {
         return authService.signup(request);
+    }
+
+    @GetMapping("/me")
+    public UserDto me(Authentication authentication) {
+        return authService.getCurrentUser(authentication);
     }
 }

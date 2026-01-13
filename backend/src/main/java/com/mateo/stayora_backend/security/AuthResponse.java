@@ -5,7 +5,8 @@ import com.mateo.stayora_backend.api.enums.UserRole;
 public record AuthResponse(
         String token,
         Long expiresAt,
-        String username,
+        Long id,
+        String email,
         String firstName,
         String lastName,
         UserRole role

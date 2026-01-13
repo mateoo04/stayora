@@ -1,18 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Link } from 'react-router-dom';
+import Logo from '../../assets/logo.png';
+import UserDrawer from "./UserDrawer";
 
 export default function Header(){
-    const navigate = useNavigate();
-    const {isAuthenticated, logOut} = useAuth();
-    return <header>Stayora
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-                {isAuthenticated ? (
-                    <li><button onClick={() => {logOut(); navigate('/log-in')}}>Log out</button></li>
-                ) : (<><li><a href="/log-in">Log in</a></li>
-                <li><a href="/sign-up">Sign up</a></li></>)}
-        </ul>
+    return <header className='flex justify-between px-4 py-2'>
+        <Link to="/"><img src={Logo} className="w-48"/></Link>
+  <UserDrawer/>
     </header>;
 }
