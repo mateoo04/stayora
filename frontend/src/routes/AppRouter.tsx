@@ -4,6 +4,8 @@ import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
 import AppLayout from "../layouts/AppLayout";
 import NotFound from "../pages/NotFound";
+import ProtectedAdminRoute from "./ProtectedAdminRoute";
+import { AdminBoard } from "../pages/AdminBoard";
 
 export default function AppRouter() {
   return (
@@ -11,10 +13,17 @@ export default function AppRouter() {
       <Routes>
         <Route path="/log-in" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+
         <Route element={<AppLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound/>} />
+
+        <Route element={<ProtectedAdminRoute />}>
+          <Route path="/admin" element={<AdminBoard />}/>
         </Route>
+
+        </Route>
+
       </Routes>
     </BrowserRouter>
   );

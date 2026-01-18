@@ -36,7 +36,7 @@ export default function ProfileDrawer() {
               <div className="flex flex-col gap-2 w-100">
                  <Link onClick={() => setIsOpen(false)} to={`/bookings`}><BuildingOffice2Icon className="w-5"/><span>My bookings</span></Link>
                 {isHost() || isAdmin() && <Link onClick={() => setIsOpen(false)} to="/listings"><RectangleStackIcon className="w-5"/><span>My listings</span></Link>}
-                {isAdmin() && <Link onClick={() => setIsOpen(false)} to="/admin/dashboard"><AdjustmentsHorizontalIcon className="w-5"/><span>Admin dashboard</span></Link>}
+                {isAdmin() && <Link onClick={() => setIsOpen(false)} to="/admin"><AdjustmentsHorizontalIcon className="w-5"/><span>Admin dashboard</span></Link>}
                 {isGuest() && <Link onClick={() => setIsOpen(false)} to="/become-a-host"><UserGroupIcon className="w-5"/><span>Become a host</span></Link>}
               <button
                 onClick={() => {

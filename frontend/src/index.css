@@ -13,6 +13,8 @@
   @apply rounded-none w-full max-w-xl mx-auto;
 }
 
+/* User drawer */
+
 .drawer.open .drawer-side{
   pointer-events: auto;
   visibility: visible;

@@ -1,13 +1,8 @@
-export type UserRole = "ADMIN" | "HOST" | "GUEST";
+import type { User } from "./user";
 
-export interface AuthState {
+export interface AuthState extends User {
   token: string;
   expiresAt: number;
-  id: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  role: UserRole;
 }
 
 export interface LoginRequest {

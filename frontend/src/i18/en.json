@@ -25,5 +25,9 @@
         "validationError": "Please ensure all fields are filled out correctly.",
         "invalidLoginData": "Invalid email or password."
     }
+  },
+  "admin":{
+    "search": "Search users...",
+    "save": "Save"
   }
 }
