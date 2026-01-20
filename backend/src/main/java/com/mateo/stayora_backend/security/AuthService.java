@@ -44,17 +44,17 @@ public class AuthService {
     }
 
     public AuthResponse signup(SignupRequest request) {
-        if(userRepository.existsByEmail(request.email())) throw new EmailAlreadyExistsException();
+        if(userRepository.existsByEmail(request.username())) throw new EmailAlreadyExistsException();
 
         if(request.password().length() < 8) throw new WeakPasswordException();
 
-        User user = new User(request.firstName(), request.lastName(), request.email(),
+        User user = new User(request.firstName(), request.lastName(), request.username(),
                 passwordEncoder.encode(request.password()), UserRole.GUEST);
 
         userRepository.save(user);
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())
+                new UsernamePasswordAuthenticationToken(request.username(), request.password())
         );
 
         String jwtToken = jwtTokenService.generateToken(authentication);

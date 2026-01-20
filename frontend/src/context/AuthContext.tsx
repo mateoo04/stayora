@@ -25,14 +25,14 @@ const [authErrorCode, setAuthErrorCode] = useState<string | undefined>(undefined
 
     useEffect(() => {
         async function loadUserFromStorage() {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("auth");
             if (token) {
                 try {
                     const res = await apiGetCurrentUser();
                     if(res) setUser(res.data);
                 } catch (error) {
                     console.error("Failed to load user from storage:", error);
-                    //localStorage.removeItem("token");
+                    //localStorage.removeItem("auth");
                     setUser(null);
                 }
             }
@@ -53,8 +53,9 @@ const [authErrorCode, setAuthErrorCode] = useState<string | undefined>(undefined
         }
     }
     const auth = res?.data;
-    if(auth){
-    localStorage.setItem("auth", JSON.stringify(auth));
+    const token = auth?.token;
+    if(token){
+    localStorage.setItem("auth", token);
     setUser(auth);
 }
   }
@@ -69,13 +70,13 @@ const [authErrorCode, setAuthErrorCode] = useState<string | undefined>(undefined
         }
         const auth = res?.data;
         if(auth) {setUser(auth);
-        localStorage.setItem('token', auth.token);
+        localStorage.setItem('auth', auth.token);
 
         api.defaults.headers.common.Authorization = auth.token;}
     };
 
   function logOut() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("auth");
     setUser(null);
   }
 

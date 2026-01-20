@@ -8,7 +8,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("auth");
   if (token && !config.url?.endsWith('/auth/log-in') && !config.url?.endsWith('/auth/sign-up')) {
     config.headers.Authorization = `Bearer ${token}`;
   }

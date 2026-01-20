@@ -24,19 +24,19 @@ public class AdminService {
         this.userRepository = userRepository;
     }
 
-    public PageResponse<UserDto> searchUsers(String email, UserRole role, int pageNum, int size) {
+    public PageResponse<UserDto> searchUsers(String email, UserRole role, Long idToExclude, int pageNum, int size) {
         Pageable pageable = PageRequest.of(pageNum, size);
 
         Page<User> page;
 
         if (email != null && role != null) {
-            page = userRepository.findByEmailContainingAndRole(email, role, pageable);
+            page = userRepository.findByEmailContainingAndRoleAndIdNot(email, role, idToExclude, pageable);
         } else if (email != null) {
-            page = userRepository.findByEmailContaining(email, pageable);
+            page = userRepository.findByEmailContainingAndIdNot(email, idToExclude, pageable);
         } else if (role != null) {
-            page = userRepository.findByRole(role, pageable);
+            page = userRepository.findByRoleAndIdNot(role, idToExclude, pageable);
         } else {
-            page = userRepository.findAll(pageable);
+            page = userRepository.findByIdNot(idToExclude, pageable);
         }
 
         return new PageResponse<>(

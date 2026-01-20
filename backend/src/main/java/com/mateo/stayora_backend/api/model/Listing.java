@@ -29,6 +29,7 @@ public class Listing {
     @Column(nullable = false)
     private String description;
 
+    @jakarta.validation.constraints.DecimalMin("0.01")
     @Column(nullable = false)
     private BigDecimal nightPrice;
 
@@ -41,9 +42,13 @@ public class Listing {
 
     private String addressLine;
 
+    @jakarta.validation.constraints.DecimalMin("-90.0")
+    @jakarta.validation.constraints.DecimalMax("90.0")
     @Column(nullable = false)
     private double latitude;
 
+    @jakarta.validation.constraints.DecimalMin("-180.0")
+    @jakarta.validation.constraints.DecimalMax("180.0")
     @Column(nullable = false)
     private double longitude;
 
@@ -59,6 +64,10 @@ public class Listing {
         this.addressLine = addressLine;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public User getHost() {

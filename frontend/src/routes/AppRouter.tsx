@@ -5,7 +5,7 @@ import Home from "../pages/Home";
 import AppLayout from "../layouts/AppLayout";
 import NotFound from "../pages/NotFound";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
-import { AdminBoard } from "../pages/AdminBoard";
+import { AdminBoard } from "../pages/admin/AdminBoard";
 
 export default function AppRouter() {
   return (

@@ -15,9 +15,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
 
-    Page<User> findByEmailContaining(String email, Pageable pageable);
-    Page<User> findByEmailContainingAndRole(String email, UserRole role, Pageable pageable);
-    Page<User> findByRole(UserRole role, Pageable pageable);
+    Page<User> findByEmailContainingAndRoleAndIdNot(String email, UserRole role, Long id, Pageable pageable);
+    Page<User> findByEmailContainingAndIdNot(String email, Long id, Pageable pageable);
+    Page<User> findByRoleAndIdNot(UserRole role, Long id, Pageable pageable);
+    Page<User> findByIdNot(Long id, Pageable pageable);
+
 
     @Modifying
     @Query("update User u set u.role = :role where u.id = :id")

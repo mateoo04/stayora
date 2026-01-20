@@ -1,8 +1,33 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+:root {
+  --color-base-100: #ffffff;
+  --color-base-200: #f3f3f3;
+  --color-base-300: #eaeaea;
+  --color-base-content: #060505;
+  --color-neutral: #292b2e;
+  --color-muted: #6b7280;
+
+  --color-primary: oklch(20% 0.01 285);; 
+  --color-primary-content: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+  --color-base-100: #110f0f;
+  --color-base-200: #211e1e;
+  --color-base-300: #2f2f2f;
+  --color-base-content: #ffffff;
+
+  --color-primary: white; 
+  --color-primary-content: oklch(20% 0.01 285);
+  }
+}
+
+
 @utility btn {
-  @apply rounded-none;
+  @apply rounded-none uppercase bg-primary text-primary-content;
 }
 
 @utility btn--big {
@@ -33,11 +58,14 @@
 }
 
 .user-drawer__menu a,
-.user-drawer__menu button{
-  padding: .25rem 1rem;
+.user-drawer__menu button,
+.admin-board__sidebar button{
+  padding: .5rem 1rem;
   display: flex;
   gap: .5rem;
   text-align: left;
   color: var(--color-base-content);
   border-bottom: 1px solid var(--color-base-300);
+  width: 100%;
+  cursor: pointer;
 }

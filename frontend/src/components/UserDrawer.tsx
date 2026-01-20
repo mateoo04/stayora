@@ -33,7 +33,7 @@ export default function ProfileDrawer() {
               {user && (<><UserCircleIcon className="w-12" />
               <p>{`${user.firstName} ${user.lastName}`}</p></>)}
               </div>
-              <div className="flex flex-col gap-2 w-100">
+              <div className="flex flex-col w-100">
                  <Link onClick={() => setIsOpen(false)} to={`/bookings`}><BuildingOffice2Icon className="w-5"/><span>My bookings</span></Link>
                 {isHost() || isAdmin() && <Link onClick={() => setIsOpen(false)} to="/listings"><RectangleStackIcon className="w-5"/><span>My listings</span></Link>}
                 {isAdmin() && <Link onClick={() => setIsOpen(false)} to="/admin"><AdjustmentsHorizontalIcon className="w-5"/><span>Admin dashboard</span></Link>}
@@ -50,14 +50,14 @@ export default function ProfileDrawer() {
               </div>
             </>
           ) : (
-            <>
+            <ul className="w-100 flex flex-col">
               <li>
                 <Link to="/log-in">Log in</Link>
               </li>
               <li>
                 <Link to="/sign-up">Sign up</Link>
               </li>
-            </>
+            </ul>
           )}
         </div>
       </div>

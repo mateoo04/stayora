@@ -27,7 +27,14 @@
     }
   },
   "admin":{
+    "dashboard": "Admin Dashboard",
+    "users_tab": "Users",
+    "listings_tab": "Listings",
+    "bookings_tab": "Bookings",
     "search": "Search users...",
-    "save": "Save"
+    "save": "Save",
+    "change_role": "Change Role",
+    "role_dialog_title": "Select a role for the user",
+    "no_users_found": "No users found."
   }
 }
