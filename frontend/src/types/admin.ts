@@ -18,8 +18,3 @@ export interface UserSearchRequest{
     page: number;
     size: number;
 }
-
-export interface RoleChangeRequest{
-    id: number;
-    role: UserRole | null;
-}

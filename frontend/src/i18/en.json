@@ -35,6 +35,20 @@
     "save": "Save",
     "change_role": "Change Role",
     "role_dialog_title": "Select a role for the user",
-    "no_users_found": "No users found."
+    "no_users_found": "No users found.",
+    "listings":{
+      "any_status": "Any status",
+      "approve": "Approve",
+      "pause": "Pause",
+      "unpause": "Unpause"
+    }
+  },
+  "listings":{
+    "title": "Listings",
+    "statuses": {
+      "draft": "Draft",
+      "active": "Active",
+      "paused": "Paused"
+    }
   }
 }

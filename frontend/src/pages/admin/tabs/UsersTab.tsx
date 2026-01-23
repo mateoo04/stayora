@@ -37,7 +37,7 @@ export function UsersTab() {
   async function requestRoleChange(newRole: UserRole | undefined) {
     if (!selectedUser || !newRole) return;
     setRoleModalOpen(false);
-    await apiChangeUserRole({ id: selectedUser!.id, role: newRole });
+    await apiChangeUserRole( selectedUser!.id, newRole );
     fetchUsers();
   }
 

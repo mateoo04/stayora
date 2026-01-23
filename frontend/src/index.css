@@ -38,6 +38,14 @@
   @apply rounded-none w-full max-w-xl mx-auto;
 }
 
+@utility dropdown-btn {
+  @apply bg-primary text-primary-content rounded-none;
+}
+
+@utility card {
+  @apply rounded-none;
+}
+
 /* User drawer */
 
 .drawer.open .drawer-side{
